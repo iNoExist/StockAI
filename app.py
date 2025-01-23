@@ -11,6 +11,9 @@ openai.api_key = ""  # Replace with your actual OpenAI API key
 # List of stocks to consider
 stock_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META"]
 
+subStrTkr = ""
+subStrQty = ""
+
 # Function to get stock data for the last 6 months (but only return the most recent close price)
 def get_stock_data(stock_symbol):
     try:
@@ -68,6 +71,8 @@ def get_investment_advice( risk_level, length_months, initial_capital, image_ind
         {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment. Depending on the risk level(0-10) suggest higher risk/volitile if its 10 and lower on 0. Use any stock that is avaible to you and make it align with the initial capital. Make the output format as the equities ticker(such as TSLA_US_EQ for tesla) and then full stock name and then after a new line give a short consice 2 sentence report on why and how much to invest along with timescale linked to the preferred length. DONT INCLUE LABELS FOR THE TICKER OR STOCK NAME BUT ADD SQUARE BRACKETS ENCASING THE TICKER ONE BEFORE AND ONE AFTER"}
     )
 
+
+
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",  # Ensure you're using the correct GPT-4 model as specified
@@ -75,10 +80,17 @@ def get_investment_advice( risk_level, length_months, initial_capital, image_ind
             #max_tokens=150,
             temperature=0.7
         )
+        
         return response['choices'][0]['message']['content'].strip()
+    
+        
+        
     except Exception as e:
         print(f"Error getting response from OpenAI: {e}")
         return "Error getting investment advice."
+    
+    
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
