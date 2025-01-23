@@ -11,6 +11,7 @@
     <div class="container">
         <h1>Stock Investment Advisor</h1>
 
+    
         <!-- Image Slider -->
         <div class="image-slider" id="slider">
             <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Image 1" class="slider-image">
@@ -21,7 +22,7 @@
                 <button onclick="nextImage()">&#8250;</button>
             </div>
         </div>
-        
+        <form>
         <!-- Slider to select investment amount -->
         <label for="investment-amount">Select Risk Level:</label>
         <input
@@ -44,7 +45,7 @@
             oninput="document.getElementById('length-display').innerText = this.value">
         <label><span id="length-display">6</span></label>
 
-        <form>
+        
             <label for="quantity">Initial Capital (£):</label>
             <input type="number" id="quantity" name="quantity" min="1">
           </form>
