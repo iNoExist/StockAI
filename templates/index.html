@@ -10,7 +10,45 @@
 
     <div class="container">
         <h1>Stock Investment Advisor</h1>
+
+        <!-- Image Slider -->
+        <div class="image-slider" id="slider">
+            <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Image 1" class="slider-image">
+            <img src="{{ url_for('static', filename='image2.png') }}" alt="Image 2" class="slider-image">
+            <img src="{{ url_for('static', filename='image3.png') }}" alt="Image 3" class="slider-image">
+            <div class="slider-buttons">
+                <button onclick="prevImage()">&#8249;</button>
+                <button onclick="nextImage()">&#8250;</button>
+            </div>
+        </div>
         
+        <!-- Slider to select investment amount -->
+        <label for="investment-amount">Select Risk Level:</label>
+        <input
+            type="range" 
+            id="investment-amount" 
+            name="investment_amount" 
+            min="0" 
+            max="10" 
+            value="5">
+
+        <!-- Slider to select investment amount -->
+        <label for="length-amount">Select Preferred Length(Months):</label>
+        <input 
+            type="range" 
+            id="length-amount" 
+            name="length_amount" 
+            min="0" 
+            max="12" 
+            value="6"
+            oninput="document.getElementById('length-display').innerText = this.value">
+        <label><span id="length-display">6</span></label>
+
+        <form>
+            <label for="quantity">Initial Capital (£):</label>
+            <input type="number" id="quantity" name="quantity" min="1">
+          </form>
+
         <!-- Button to trigger stock analysis -->
         <form method="POST">
             <button type="submit">Let ChatGPT Choose a Stock and Get Investment Advice</button>
@@ -26,3 +64,25 @@
 
 </body>
 </html>
+<script>
+    let currentIndex = 0;
+    const images = document.querySelectorAll('.slider-image');
+
+    function showImage(index) {
+        images.forEach((img, i) => {
+            img.style.display = i === index ? 'block' : 'none';
+        });
+    }
+
+    function prevImage() {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+        showImage(currentIndex);
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+        showImage(currentIndex);
+    }
+
+    showImage(currentIndex);
+</script>
