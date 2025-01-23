@@ -26,22 +26,22 @@ def get_stock_data(stock_symbol):
         return None
 
 # Function to get investment advice from ChatGPT based on stock data
-def get_investment_advice(stock_symbols, risk_level, length_months, initial_capital, image_index):
-    stocks_data = {}
+def get_investment_advice( risk_level, length_months, initial_capital, image_index):
+    # stocks_data = {}
 
     # Collect stock data for each stock
-    for stock_symbol in stock_symbols:
-        stock_data = get_stock_data(stock_symbol)
-        if stock_data is None:
-            print(f"Skipping {stock_symbol} due to missing stock data.")
-            continue  # Skip stocks with no valid data
+    # for stock_symbol in stock_symbols:
+    #     stock_data = get_stock_data(stock_symbol)
+    #     if stock_data is None:
+    #         print(f"Skipping {stock_symbol} due to missing stock data.")
+    #         continue  # Skip stocks with no valid data
 
-        stocks_data[stock_symbol] = stock_data
+    #     stocks_data[stock_symbol] = stock_data
 
-    # Check if we have any valid data to pass to OpenAI
-    if not stocks_data:
-        print("No valid stock data available to analyze.")
-        return "No valid stock data available to analyze."
+    # # Check if we have any valid data to pass to OpenAI
+    # if not stocks_data:
+    #     print("No valid stock data available to analyze.")
+    #     return "No valid stock data available to analyze."
 
     # Determine the image category based on the image index
     image_category = ""
@@ -58,21 +58,21 @@ def get_investment_advice(stock_symbols, risk_level, length_months, initial_capi
         {"role": "user", "content": f"Risk level: {risk_level}, Preferred length: {length_months} months, Initial Capital: £{initial_capital}, Image Category: {image_category}"}
     ]
 
-    for stock_symbol in stocks_data:
-        price = stocks_data[stock_symbol]
-        messages.append(
-            {"role": "user", "content": f"Stock: {stock_symbol}\nLatest Price: {price}"}
-        )
+    # for stock_symbol in stocks_data:
+    #     price = stocks_data[stock_symbol]
+    #     messages.append(
+    #         {"role": "user", "content": f"Stock: {stock_symbol}\nLatest Price: {price}"}
+    #     )
 
     messages.append(
-        {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment."}
+        {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment. Depending on the risk level(0-10) suggest higher risk/volitile if its 10 and lower on 0. Use any stock that is avaible to you and make it align with the initial capital. Make the output format as the equities ticker(such as TSLA_US_EQ for tesla) and then full stock name and then after a new line give a short consice 2 sentence report on why and how much to invest along with timescale linked to the preferred length. DONT INCLUE LABELS FOR THE TICKER OR STOCK NAME BUT ADD SQUARE BRACKETS ENCASING THE TICKER ONE BEFORE AND ONE AFTER"}
     )
 
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",  # Ensure you're using the correct GPT-4 model as specified
             messages=messages,    # Use the constructed messages list
-            max_tokens=150,
+            #max_tokens=150,
             temperature=0.7
         )
         return response['choices'][0]['message']['content'].strip()
@@ -105,7 +105,7 @@ def index():
 
         # Call the investment advice function with the captured values
         investment_advice = get_investment_advice(
-            stock_symbols, 
+            #stock_symbols, 
             investment_amount, 
             length_amount, 
             quantity,
