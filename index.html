@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Investment Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Stock Investment Advisor</h1>
+        
+        <!-- Button to trigger stock analysis -->
+        <form method="POST">
+            <button type="submit">Let ChatGPT Choose a Stock and Get Investment Advice</button>
+        </form>
+
+        {% if investment_advice %}
+            <div class="result">
+                <h2>Investment Advice</h2>
+                <p>{{ investment_advice }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
