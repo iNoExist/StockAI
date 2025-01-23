@@ -46,8 +46,8 @@ def get_investment_advice(stock_symbols):
 
     # Construct the messages for the new OpenAI API call (similar to your template)
     messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Please provide investment advice based on the following stocks and their latest prices:"}
+        {"role": "system", "content": "You are a helpful finance assistant who is always choosing the ideal stocks."},
+        {"role": "user", "content": "Please provide investment advice based on the following stocks and their last 3 months of price/activity:"}
     ]
 
     for stock_symbol in stocks_data:
@@ -57,7 +57,7 @@ def get_investment_advice(stock_symbols):
         )
 
     messages.append(
-        {"role": "user", "content": "Based on this data, provide a recommendation on which stock is a good investment. Be concise and clear."}
+        {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment. For the recommend stock, format it in the following: Stock symbol, new line, Full stock name. Then the reason for why you reccomend  this stock in a concise sentence. Then give an reccomended range to buy and how long to hold for."}
     )
 
     # Use the correct OpenAI API method based on your provided template
