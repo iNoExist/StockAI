@@ -11,7 +11,6 @@
     <div class="container">
         <h1>Stock Investment Advisor</h1>
 
-    
         <!-- Image Slider -->
         <div class="image-slider" id="slider">
             <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Image 1" class="slider-image">
@@ -22,36 +21,38 @@
                 <button onclick="nextImage()">&#8250;</button>
             </div>
         </div>
-        <form>
-        <!-- Slider to select investment amount -->
-        <label for="investment-amount">Select Risk Level:</label>
-        <input
-            type="range" 
-            id="investment-amount" 
-            name="investment_amount" 
-            min="0" 
-            max="10" 
-            value="5">
 
-        <!-- Slider to select investment amount -->
-        <label for="length-amount">Select Preferred Length(Months):</label>
-        <input 
-            type="range" 
-            id="length-amount" 
-            name="length_amount" 
-            min="0" 
-            max="12" 
-            value="6"
-            oninput="document.getElementById('length-display').innerText = this.value">
-        <label><span id="length-display">6</span></label>
+        <form method="POST">
+            <!-- Slider to select investment amount -->
+            <label for="investment-amount">Select Risk Level:</label>
+            <input
+                type="range" 
+                id="investment-amount" 
+                name="investment_amount" 
+                min="0" 
+                max="10" 
+                value="5">
 
-        
+            <!-- Slider to select preferred length -->
+            <label for="length-amount">Select Preferred Length(Months):</label>
+            <input 
+                type="range" 
+                id="length-amount" 
+                name="length_amount" 
+                min="0" 
+                max="12" 
+                value="6"
+                oninput="document.getElementById('length-display').innerText = this.value">
+            <label><span id="length-display">6</span></label>
+
+            <!-- Text input for Initial Capital -->
             <label for="quantity">Initial Capital (£):</label>
             <input type="number" id="quantity" name="quantity" min="1">
-          </form>
 
-        <!-- Button to trigger stock analysis -->
-        <form method="POST">
+            <!-- Hidden input to send the image index (tech, energy, automotive) -->
+            <input type="hidden" id="image-index" name="image_index" value="0">
+
+            <!-- Submit Button -->
             <button type="submit">Let ChatGPT Choose a Stock and Get Investment Advice</button>
         </form>
 
@@ -65,9 +66,11 @@
 
 </body>
 </html>
+
 <script>
     let currentIndex = 0;
     const images = document.querySelectorAll('.slider-image');
+    const imageIndexInput = document.getElementById('image-index');
 
     function showImage(index) {
         images.forEach((img, i) => {
@@ -77,11 +80,13 @@
 
     function prevImage() {
         currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+        imageIndexInput.value = currentIndex; // Update the hidden input with the current image index
         showImage(currentIndex);
     }
 
     function nextImage() {
         currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+        imageIndexInput.value = currentIndex; // Update the hidden input with the current image index
         showImage(currentIndex);
     }
 
