@@ -74,12 +74,14 @@ h1 {
 }
 
 form {
-    display: flex;
     justify-content: center;
     gap: 10px;
 }
 
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
     padding: 10px;
     font-size: 1rem;
@@ -157,6 +159,5 @@ button:hover {
   
 label {
     color: #28869e;
-    margin-bottom: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
 }
