@@ -14,7 +14,7 @@
     
         <!-- Image Slider -->
         <div class="image-slider" id="slider">
-            <img src="{{ url_for('static', filename='image1.jpg') }}" alt="Image 1" class="slider-image">
+            <img src="{{ url_for('static', filename='image1.png') }}" alt="Image 1" class="slider-image">
             <img src="{{ url_for('static', filename='image2.png') }}" alt="Image 2" class="slider-image">
             <img src="{{ url_for('static', filename='image3.png') }}" alt="Image 3" class="slider-image">
             <div class="slider-buttons">
@@ -45,7 +45,7 @@
             oninput="document.getElementById('length-display').innerText = this.value">
         <label><span id="length-display">6</span></label>
 
-        
+        <br>
             <label for="quantity">Initial Capital (£):</label>
             <input type="number" id="quantity" name="quantity" min="1">
           </form>
