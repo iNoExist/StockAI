@@ -51,7 +51,10 @@ def buyStonks(tkr: str, qty: float ):
 def dessembler2(rsp: str):
     print("analysing response... ... ...")
     
-    rsp = "[TSLA_US_EQ] Tesla, Inc. Given your high-risk tolerance and interest in the tech sector, Tesla presents an attractive investment opportunity. With a current price around £200, you could purchase approximately [115] shares for a total investment of £23,000, aiming for a short-term gain over the next three months as the EV market continues to grow and Tesla releases new production updates."
+    rsp = """  [NVDA_US_EQ]  
+NVIDIA Corporation
+
+NVIDIA is well-positioned in the tech sector, particularly in AI and gaming, which are expected to see significant growth in the coming months. With an investment of £11,000, you could purchase approximately [55] shares at a price of £200 per share, making this a suitable high-risk investment for the 3-month timeframe."""
     # for a given response find the tkr (first set of square brackets)
     indx1 = rsp.find("[")
     indx2 = rsp.find("]")

@@ -15,7 +15,7 @@ openai.api_key = api_key # Replace with your actual OpenAI API key
 stock_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META"]
 
 
-
+rsp = ""
 
 def dessembler(rsp: str):
     print("analysing response... ... ...")
@@ -38,7 +38,7 @@ def dessembler(rsp: str):
     # the qty sub string
     subStrQty = rsp[indx1+1:indx2-1]
     
-    buyStonks(subStrTkr, float(subStrQty))
+    # buyStonks(subStrTkr, float(subStrQty))
 
     
 
@@ -110,6 +110,9 @@ def get_investment_advice( risk_level, length_months, initial_capital, image_ind
             temperature=0.7
         )
         
+        print("this is my response: " , response['choices'][0]['message']['content'].strip())
+
+        rsp = response['choices'][0]['message']['content'].strip()
         return response['choices'][0]['message']['content'].strip()
     
         
@@ -153,6 +156,8 @@ def index():
             image_index
         )
 
+        # call the dessembler to dessemble and purchase 
+        dessembler(rsp)
     return render_template("index.html", investment_advice=investment_advice)
 
 if __name__ == "__main__":
