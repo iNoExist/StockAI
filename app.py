@@ -1,18 +1,47 @@
 import openai
 import requests
 import yfinance as yf
+import os
+from apiDemo import buyStonks;
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 # Set your OpenAI API Key for ChatGPT (hardcoded)
-openai.api_key = ""  # Replace with your actual OpenAI API key
+api_key = os.getenv('API_KEY')
+openai.api_key = api_key # Replace with your actual OpenAI API key
 
 # List of stocks to consider
 stock_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META"]
 
-subStrTkr = ""
-subStrQty = ""
+
+
+
+def dessembler(rsp: str):
+    print("analysing response... ... ...")
+    
+    # for a given response find the tkr (first set of square brackets)
+    indx1 = rsp.find("[")
+    indx2 = rsp.find("]")
+
+    # the tkr sub string
+    subStrTkr = rsp[indx1+1:indx2+indx1]
+
+    # temporarly remove the first with empty space to find the second
+    rsp = rsp.replace(subStrTkr, "")
+
+    # find the qty (second set of square brackets)
+    # for a given response find the tkr (first set of square brackets)
+    indx1 = rsp.find("[")
+    indx2 = rsp.find("]")
+
+    # the qty sub string
+    subStrQty = rsp[indx1+1:indx2-1]
+    
+    buyStonks(subStrTkr, float(subStrQty))
+
+    
+
 
 # Function to get stock data for the last 6 months (but only return the most recent close price)
 def get_stock_data(stock_symbol):
@@ -68,7 +97,7 @@ def get_investment_advice( risk_level, length_months, initial_capital, image_ind
     #     )
 
     messages.append(
-        {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment. Depending on the risk level(0-10) suggest higher risk/volitile if its 10 and lower on 0. Use any stock that is avaible to you and make it align with the initial capital. Make the output format as the equities ticker(such as TSLA_US_EQ for tesla) and then full stock name and then after a new line give a short consice 2 sentence report on why and how much to invest along with timescale linked to the preferred length. DONT INCLUE LABELS FOR THE TICKER OR STOCK NAME BUT ADD SQUARE BRACKETS ENCASING THE TICKER ONE BEFORE AND ONE AFTER"}
+        {"role": "user", "content": "Based on this data, provide a recommendation on which singular stock is a good investment. Depending on the risk level(0-10) suggest higher risk/volitile if its 10 or low on 0. Use any stock that is avaible to you and make it align with the initial capital. Make the output format as the equities ticker(such as TSLA_US_EQ for tesla) and then full stock name and then after a new line give a short consice 2 sentence report on why and how much to invest along with timescale linked to the preferred length. MUST Add quantity of stock purchased based on capital (work it out by capital/price of stock), DO NOT ROUND INSERTED IN SQUARE BRACKETS. DONT INCLUDE LABELS FOR THE TICKER OR STOCK NAME BUT ADD SQUARE BRACKETS ENCASING THE TICKER ONE BEFORE AND ONE AFTER"}
     )
 
 
